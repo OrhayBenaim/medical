@@ -1,0 +1,47 @@
+{
+    "id": 2,
+    "title": "Are you using any heart medications ?",
+    "type": "radio",
+    "answer": "1",
+    "childItems": [
+        {
+            "id": 3,
+            "parentAnswer": "1",
+            "title": "Select medication",
+            "type": "select",
+            "answer": "Aspirin",
+            "options": [
+                "Accupril",
+                "Aceon (perindopril)",
+                "Adalat (nifedipine)",
+                "Altace (ramipril)",
+                "Apresoline (hydralazine)",
+                "Aspirin",
+                "Benicar HCT (hydrochlorothiazide and olmesartan)",
+                "Brilinta (ticagrelor)"
+            ],
+            "childItems": [
+                {
+                    "id": 4,
+                    "parentAnswer": "Aspirin",
+                    "title": "How many times did you tooks Aspirin today?",
+                    "type": "number"
+                },
+                {
+                    "id": 5,
+                    "title": "Did you had any water today?",
+                    "type": "radio",
+                    "answer": "1",
+                    "childItems": [
+                        {
+                            "id": 5,
+                            "parentAnswer": "1",
+                            "title": "Did you drunk more then 1 liter of water today?",
+                            "type": "radio"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
