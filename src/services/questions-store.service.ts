@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, map } from 'rxjs';
 import { Question } from 'src/models/types';
 import QuestionsData from 'src/assets/Questions.json';
 
@@ -11,6 +11,11 @@ export class QuestionsStoreService {
   private readonly _questions = new BehaviorSubject<Question[]>(QuestionsData.patientQuestions as Question[]);
   
   readonly questions$ = this._questions.asObservable();
+
+  constructor() {
+    this.checkDepended(this.questions);
+  }
+
 
   get questions(): Question[]{
     return this._questions.getValue()
@@ -37,14 +42,14 @@ export class QuestionsStoreService {
     return this.questions.find(q=> q.id === questionId) // doesnt have a parent find it in the root
 
   }
-
   
 
   updateAnswer(questionId: number, answer: string){
     const question = this.findQuestion(questionId);
     if(question){
       question.answer = answer;
-
+      this.checkDepended(this.questions);
+      
       this.questions = [...this.questions] // we update the ref so we can just call the setter to trigger rjx next function
       
     }
@@ -52,6 +57,27 @@ export class QuestionsStoreService {
   }
 
 
+  // this function updates the question ref
+  private checkDepended(questions: Question[]){
+  
+    for (const question of questions) {
+      if(question.childItems){ // loop over all the questions tree
+          this.checkDepended(question.childItems)
+      }
+      if(question.parentAnswer){  
+        const parent = this.findParent(question.id);
+        
+        if(parent?.answer === question.parentAnswer && parent.visible) question.visible = true;
+        else question.visible = false;
+      }
+      else{
+        question.visible = true;
+      }
+    }
+    
+  }
+
+  
 
   private findParentRecursive(questionId: number,question: Question) : Question | undefined{
 
@@ -65,12 +91,12 @@ export class QuestionsStoreService {
       }
     }
     return undefined // noting found doesnt have a parent
-  
-     
-   
     
   }
 
+
+
+  Trackfn = (i:number, question:Question) => question.id;
 
 
   

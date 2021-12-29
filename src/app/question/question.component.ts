@@ -1,11 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit,  ChangeDetectionStrategy } from '@angular/core';
 import { Question } from 'src/models/types';
 import { QuestionsStoreService } from 'src/services/questions-store.service';
 
 @Component({
   selector: 'question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css']
+  styleUrls: ['./question.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuestionComponent implements OnInit {
   
@@ -15,30 +16,9 @@ export class QuestionComponent implements OnInit {
   @Input()
   question!: Question; 
 
-  @Output() changed = new EventEmitter<string>();
 
-
-  private checkDepended(){
-    if(this.question.parentAnswer){  
-      const parent = this.questionsStoreService.findParent(this.question.id);
+  ngOnInit(): void {
       
-      if(parent?.answer === this.question.parentAnswer) this.question.visible = true;
-      
-    }
-    else{
-      this.question.visible = true;
-    }
-  }
-
-
-  ngOnInit() {
-    this.checkDepended();
-  }
-
-
-
-  ngOnChanges(){
-    this.checkDepended();
   }
 
   onChange(value: string){

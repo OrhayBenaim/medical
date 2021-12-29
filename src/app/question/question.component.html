@@ -1,4 +1,6 @@
-<div *ngIf="question.visible" class="question">
+
+
+<div class="question" *ngIf='question.visible'>
 
     <div class="question_container">
         <div class="title">{{question.title}}</div>
@@ -22,7 +24,7 @@
    
 
     <div class="dependedQuestions">
-        <question  *ngFor="let child of question.childItems" [question]="child"></question>
+        <question  *ngFor="let child of question.childItems trackBy: questionsStoreService.Trackfn" [question]="child"></question>
     </div>
 </div>
 
