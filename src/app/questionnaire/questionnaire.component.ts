@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Question } from 'src/models/types';
+import { QuestionsStoreService } from 'src/services/questions-store.service';
 
 @Component({
   selector: 'app-questionnaire',
@@ -8,7 +9,7 @@ import { Question } from 'src/models/types';
 })
 export class QuestionnaireComponent implements OnInit {
 
-  constructor() { }
+  constructor(public questionsStoreService: QuestionsStoreService) { }
 
   @Input()
   questions: Question[] | null = [];

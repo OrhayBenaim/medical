@@ -1,5 +1,5 @@
 
-    <div *ngFor="let question of questions">
+    <div *ngFor="let question of (questionsStoreService.questions$ | async)">
         <question [question]="question"></question>
         
     </div>

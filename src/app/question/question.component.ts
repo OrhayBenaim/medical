@@ -16,10 +16,11 @@ export class QuestionComponent implements OnInit {
   question!: Question; 
 
   @Output() changed = new EventEmitter<string>();
-  async ngOnInit() {
-    
+
+
+  private checkDepended(){
     if(this.question.parentAnswer){  
-      const parent = await this.questionsStoreService.findParent(this.question);
+      const parent = this.questionsStoreService.findParent(this.question.id);
       
       if(parent?.answer === this.question.parentAnswer) this.question.visible = true;
       
@@ -27,11 +28,24 @@ export class QuestionComponent implements OnInit {
     else{
       this.question.visible = true;
     }
-    
+  }
+
+
+  ngOnInit() {
+    this.checkDepended();
+  }
+
+
+
+  ngOnChanges(){
+    this.checkDepended();
   }
 
   onChange(value: string){
-    // this.questionsStoreService.
+    this.questionsStoreService.updateAnswer(this.question.id, value);
   }
+
+
+
 
 }

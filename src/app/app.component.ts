@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { QuestionsStoreService } from 'src/services/questions-store.service';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +8,5 @@ import { QuestionsStoreService } from 'src/services/questions-store.service';
 export class AppComponent {
   title = 'medical';
   
-  constructor(public questionsStoreService: QuestionsStoreService) {}
+  constructor() {}
 }
