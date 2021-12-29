@@ -1,0 +1,30 @@
+.title{
+    font-size: 18px;
+}
+.question{
+    margin-inline-start: 20px;
+    padding: 5px 0;
+}
+
+
+.question_container{
+    display: flex;
+    gap: 10px;
+ 
+}
+
+.question_radioGroup{
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+.question_radioGroup > *{
+    margin-bottom: 0;
+}
+
+.question_radioGroup input[type="radio"]{
+    height: 20px;
+    width: 20px;
+    margin-inline-end: 20px;
+    margin-inline-start: 5px;
+}

@@ -16,6 +16,7 @@
                     "parentAnswer": "1",
                     "title": "Select medication",
                     "type": "select",
+                    "answer": "Aspirin",
                     "options": [
                         "Accupril",
                         "Aceon (perindopril)",
@@ -37,6 +38,7 @@
                             "id": 5,
                             "title": "Did you had any water today?",
                             "type": "radio",
+                            "answer": "1",
                             "childItems": [
                                 {
                                     "id": 6,

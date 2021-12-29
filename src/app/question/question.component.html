@@ -1,20 +1,30 @@
-<div *ngIf="question.visible">
-    <div class="title">{{question.title}}</div>
+<div *ngIf="question.visible" class="question">
+
+    <div class="question_container">
+        <div class="title">{{question.title}}</div>
     
-    <input [ngModel]="question.answer" (ngModelChange)="onChange($event)" [name] ='"Question_" + question.id' *ngIf="question.type == 'number' || question.type == 'text'" [type]="question.type"/>
-
-    <label [for] ='"Question_yes_" + question.id' *ngIf="question.type == 'radio'">Yes</label>
-    <input [ngModel]="question.answer" (ngModelChange)="onChange($event)" [id]='"Question_yes_" + question.id' [name] ='"Question_" + question.id' *ngIf="question.type == 'radio'" type="radio" value="0">
+        <input [ngModel]="question.answer" (ngModelChange)="onChange($event)" [name] ='"Question_" + question.id' *ngIf="question.type == 'number' || question.type == 'text'" [type]="question.type"/>
+    
+        <div class="question_radioGroup">
+            <label [for] ='"Question_yes_" + question.id' *ngIf="question.type == 'radio'">Yes</label>
+            <input [ngModel]="question.answer" (ngModelChange)="onChange($event)" [id]='"Question_yes_" + question.id' [name] ='"Question_" + question.id' *ngIf="question.type == 'radio'" type="radio" value="1">
+           
+            <label [for] ='"Question_no_" + question.id' *ngIf="question.type == 'radio'">No</label>
+            <input [ngModel]="question.answer" (ngModelChange)="onChange($event)" [id]='"Question_no_" + question.id' [name] ='"Question_" + question.id' *ngIf="question.type == 'radio'" type="radio" value="2">
+        
+        </div>
+    
+        <select [ngModel]="question.answer" (ngModelChange)="onChange($event)" [name] ='"Question_" + question.id' *ngIf="question.type == 'select'">
+            <option *ngFor="let option of question.options" [value]='option'>{{option}}</option>
+        </select>
+    
+    </div>
    
-    <label [for] ='"Question_no_" + question.id' *ngIf="question.type == 'radio'">No</label>
-    <input [ngModel]="question.answer" (ngModelChange)="onChange($event)" [id]='"Question_no_" + question.id' [name] ='"Question_" + question.id' *ngIf="question.type == 'radio'" type="radio" value="1">
 
-    <select [ngModel]="question.answer" (ngModelChange)="onChange($event)" [name] ='"Question_" + question.id' *ngIf="question.type == 'select'">
-        <option *ngFor="let option of question.options" [value]='option'>{{option}}</option>
-    </select>
-
-    <div class="dependedQuestions"  >
+    <div class="dependedQuestions">
         <question  *ngFor="let child of question.childItems" [question]="child"></question>
     </div>
-
 </div>
+
+
+
