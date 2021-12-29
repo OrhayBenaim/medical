@@ -9,6 +9,7 @@
             "id": 2,
             "title": "Are you using any heart medications ?",
             "type": "radio",
+            "answer": "1",
             "childItems": [
                 {
                     "id": 3,

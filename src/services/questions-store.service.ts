@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Question } from 'src/models/types';
 import QuestionsData from 'src/assets/Questions.json';
 
@@ -13,7 +13,7 @@ export class QuestionsStoreService {
   readonly questions$ = this._questions.asObservable();
 
   constructor() {
-    this.checkDepended(this.questions);
+    this.updateVisibility(this.questions);
   }
 
 
@@ -48,7 +48,7 @@ export class QuestionsStoreService {
     const question = this.findQuestion(questionId);
     if(question){
       question.answer = answer;
-      this.checkDepended(this.questions);
+      this.updateVisibility(this.questions);
       
       this.questions = [...this.questions] // we update the ref so we can just call the setter to trigger rjx next function
       
@@ -57,17 +57,18 @@ export class QuestionsStoreService {
   }
 
 
-  // this function updates the question ref
-  private checkDepended(questions: Question[]){
+  // this function updates the question by ref
+  private updateVisibility(questions: Question[]){
   
     for (const question of questions) {
       if(question.childItems){ // loop over all the questions tree
-          this.checkDepended(question.childItems)
+          this.updateVisibility(question.childItems)
       }
       if(question.parentAnswer){  
+        
         const parent = this.findParent(question.id);
         
-        if(parent?.answer === question.parentAnswer && parent.visible) question.visible = true;
+        if(parent?.answer === question.parentAnswer) question.visible = true;
         else question.visible = false;
       }
       else{
