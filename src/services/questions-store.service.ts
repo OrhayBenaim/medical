@@ -8,6 +8,7 @@ import QuestionsData from 'src/assets/Questions.json';
 })
 export class QuestionsStoreService {
   
+  
   private readonly _questions = new BehaviorSubject<Question[]>(QuestionsData.patientQuestions as Question[]);
   
   readonly questions$ = this._questions.asObservable();
@@ -44,14 +45,14 @@ export class QuestionsStoreService {
   }
   
 
-  updateAnswer(questionId: number, answer: string){
+  updateAnswer(questionId: number, answer: string){    
     const question = this.findQuestion(questionId);
     if(question){
       question.answer = answer;
       this.updateVisibility(this.questions);
       
       this.questions = [...this.questions] // we update the ref so we can just call the setter to trigger rjx next function
-      
+   
     }
 
   }

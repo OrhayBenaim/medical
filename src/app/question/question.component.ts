@@ -1,4 +1,4 @@
-import { Component, Input, OnInit,  ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, OnInit,  ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
 import { Question } from 'src/models/types';
 import { QuestionsStoreService } from 'src/services/questions-store.service';
 
@@ -16,13 +16,10 @@ export class QuestionComponent implements OnInit {
   @Input()
   question!: Question; 
 
+  @Output() changedAnswer = new EventEmitter<string>();
 
   ngOnInit(): void {
       
-  }
-
-  onChange(value: string){
-    this.questionsStoreService.updateAnswer(this.question.id, value);
   }
 
 
