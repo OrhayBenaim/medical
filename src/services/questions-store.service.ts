@@ -21,11 +21,13 @@ export class QuestionsStoreService {
     this._questions.next(questions);
   }
 
-  async findParent(question: Question){
-    const parent = this.questions.find(q => this.findParentRecursive(question.id, q));
-    // console.log({question , parent});
-    
-    return parent
+  findParent(question: Question) : Question | undefined{
+
+    for (const q of this.questions) {
+      const parent = this.findParentRecursive(question.id, q);
+      if(parent) return parent
+    }
+    return undefined
     
   }
 
@@ -33,32 +35,24 @@ export class QuestionsStoreService {
 
   }
 
-  private findParentRecursive(questionId: number,question: Question){
-   
-    const foundQuestion = this.FindRecursive(questionId, question);
-    console.log(questionId, question, foundQuestion);
-    
-    if(foundQuestion && foundQuestion.id === questionId) return question;
-
-    return undefined
-  }
 
 
-  private FindRecursive(questionId: number,question: Question) : Question | undefined{
-    
-    if(question.id === questionId) return question;
-  
-    let foundQuestion = undefined;
+  private findParentRecursive(questionId: number,question: Question) : Question | undefined{
+
     if(question.childItems){
-
-      for (const q of question.childItems) {
-        foundQuestion = this.FindRecursive(questionId, q);
-        if(foundQuestion) break;
+      const result = question.childItems.find(q => q.id === questionId)  // check if the current question is the parent for the searching questionId
+      if(result) return  question;
+  
+      for (const q of question.childItems) { // keep searching the childItems untill you find
+        const parent = this.findParentRecursive(questionId, q);
+        if(parent) return parent;
       }
+    }
+    return undefined // noting found doesnt have a parent
+  
      
-    }1
+   
     
-    return foundQuestion;
   }
 
 
