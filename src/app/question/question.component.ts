@@ -1,12 +1,11 @@
-import { Component, Input, OnInit,  ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit,  ChangeDetectionStrategy } from '@angular/core';
 import { Question } from 'src/models/types';
 import { QuestionsStoreService } from 'src/services/questions-store.service';
 
 @Component({
   selector: 'question',
   templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./question.component.css']
 })
 export class QuestionComponent implements OnInit {
   
@@ -16,12 +15,13 @@ export class QuestionComponent implements OnInit {
   @Input()
   question!: Question; 
 
-  @Output() changedAnswer = new EventEmitter<string>();
-
   ngOnInit(): void {
-      
+    this.questionsStoreService.questions$.subscribe(console.log);
   }
 
+  public onAnswerUpdate(answer: string){
+    this.questionsStoreService.updateAnswer(this.question.id, answer)
+  }
 
 
 

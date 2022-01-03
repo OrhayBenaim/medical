@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, ChangeDetectorRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Question } from 'src/models/types';
 import { QuestionsStoreService } from 'src/services/questions-store.service';
 
 @Component({
@@ -10,11 +11,15 @@ import { QuestionsStoreService } from 'src/services/questions-store.service';
 export class QuestionnaireComponent{
 
   
-  constructor(public questionsStoreService: QuestionsStoreService) { }
+  constructor(public questionsStoreService: QuestionsStoreService) {
+    
+   }
 
-
-  public onAnswerUpdate(questionId: number, answer: string){
-    this.questionsStoreService.updateAnswer(questionId, answer)
+  public questions: Question[] = [];
+  ngOnInit(): void {
+    this.questionsStoreService.questions$.subscribe(questions =>{
+      this.questions = questions;
+    });
   }
 
 }

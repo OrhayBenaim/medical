@@ -1,13 +1,8 @@
-<div *ngFor="let question of questionsStoreService.questions$ | async; trackBy: questionsStoreService.Trackfn" >
+<div *ngFor="let question of questions; trackBy: questionsStoreService.Trackfn" >
 <question  
-    
     [question]="question"
-    (changedAnswer)="onAnswerUpdate(question.id, $event)"
     >
 </question>
 
 
-<div class="dependedQuestions">
-    <question  *ngFor="let child of question.childItems trackBy: questionsStoreService.Trackfn" [question]="child" (changedAnswer)="onAnswerUpdate(child.id, $event)"></question>
-</div>
 </div>
